@@ -1,0 +1,26 @@
+# ── Mouse Behavior Analysis Dashboard ──────────────────────────────
+# 설치:  pip install -r requirements.txt
+# 검증 환경: Python 3.11+ (개발 3.13)
+
+# UI / 시각화
+streamlit==1.51.0
+plotly==6.3.0
+matplotlib==3.10.6
+seaborn==0.13.2
+
+# 데이터 / 분석
+pandas==2.2.3
+numpy==2.2.1
+scipy==1.16.3
+scikit-learn==1.7.2
+statsmodels==0.14.5
+tabulate==0.9.0
+
+# DB 드라이버 (라이브 PostgreSQL 경로용 — 데모(SQLite)에서도 import 됨)
+psycopg2-binary>=2.9
+
+# 파이프라인(영상→포즈 전처리)용 — 대시보드 데모 실행에는 불필요
+opencv-python>=4.12.0
+
+# 선택: 설치 시 UMAP 임베딩 사용, 미설치 시 PCA로 자동 폴백
+# umap-learn>=0.5

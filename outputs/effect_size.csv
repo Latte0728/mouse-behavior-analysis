@@ -1,0 +1,6 @@
+Behavior,Cohens_d,T_pval,CI95_low,CI95_high
+Locomotion_Score,-3.5031,9e-06,-0.1705,-0.0906
+Exploration_Score,-0.844,0.114034,-0.1012,0.0121
+Anxiety_Score,0.4695,0.366063,-0.0371,0.0949
+Hyperactivity_Score,-4.4649,3e-06,-0.1939,-0.1188
+Freezing_Score,2.4532,0.000281,0.0642,0.164

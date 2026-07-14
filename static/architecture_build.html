@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --navy:#233247; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+    --g:#eaf7ee; --gb:#bfe3c9; --p:#f3effc; --pb:#d8caf3;
+    --a:#fdf6e4; --ab:#f0dfa8; --b:#eef4fd; --bb:#cADDF7; --gray:#f1f5f9;
+  }
+  body{ font-family:"Segoe UI","Malgun Gothic",-apple-system,Roboto,sans-serif;
+        background:#ffffff; color:var(--ink); width:1520px; padding:34px 40px 30px; }
+  .title{ text-align:center; font-size:30px; font-weight:800; letter-spacing:-.3px; }
+  .subtitle{ text-align:center; font-size:17px; color:#334155; margin-top:6px; font-weight:600;}
+  .row{ display:flex; gap:18px; margin-top:26px; }
+  .card{ background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden;
+         box-shadow:0 1px 2px rgba(15,23,42,.04); }
+  .stage{ flex:1; display:flex; flex-direction:column; }
+  .hd{ background:var(--navy); color:#fff; font-weight:700; font-size:14.5px;
+       padding:11px 14px; letter-spacing:-.2px; }
+  .bd{ padding:16px 14px 16px; display:flex; flex-direction:column; gap:11px; flex:1; }
+  .icn{ height:44px; display:flex; align-items:center; justify-content:center; margin:2px 0 4px;}
+  .icn svg{ width:40px; height:40px; stroke:#475569; stroke-width:1.6; fill:none;
+            stroke-linecap:round; stroke-linejoin:round; }
+  .brand{ text-align:center; font-size:17px; font-weight:800; color:#1f2937; margin:2px 0 2px;}
+  .sub{ border-radius:9px; padding:10px 12px; text-align:center; }
+  .sub b{ display:block; font-size:13.5px; font-weight:700; color:#1f2937; }
+  .sub span{ display:block; font-size:11.5px; color:#64748b; margin-top:3px; }
+  .bullets{ font-size:12.5px; color:#334155; line-height:1.9; padding-left:2px;}
+  .bullets div::before{ content:"•"; color:#94a3b8; margin-right:7px; }
+  .sg{ background:var(--g); } .sp{ background:var(--p); } .sa{ background:var(--a);}
+  .sb{ background:var(--b);} .sgray{ background:var(--gray);}
+
+  .arrow{ align-self:center; display:flex; align-items:center; color:#94a3b8; }
+  .arrow svg{ width:26px; height:26px; stroke:#94a3b8; stroke-width:2; fill:none; }
+
+  /* dashed connectors band */
+  .connect{ height:34px; position:relative; }
+  .connect .v{ position:absolute; top:0; width:0; height:34px; border-left:2px dashed #b6c2d2; }
+  .connect .h{ position:absolute; top:34px; height:0; border-top:2px dashed #b6c2d2; }
+
+  .row2{ display:flex; gap:18px; align-items:stretch; margin-top:0; }
+  .dash{ flex:1.62; }
+  .thumbs{ display:flex; gap:12px; padding:16px 16px 6px; }
+  .thumb{ flex:1; }
+  .thumb .frame{ border:1px solid #e5e9f0; border-radius:8px; overflow:hidden; height:150px;
+                 background:#f8fafc; box-shadow:0 1px 2px rgba(0,0,0,.05); }
+  .thumb .frame img{ width:100%; height:100%; object-fit:cover; object-position:top left; display:block; }
+  .thumb .cap{ text-align:center; font-size:12.5px; color:#334155; font-weight:600; margin-top:8px; }
+  .userrow{ margin:8px 16px 18px; background:#eef4fd; border-radius:10px; padding:14px 18px;
+            display:flex; align-items:center; gap:20px; }
+  .userrow .who{ display:flex; align-items:center; gap:12px; font-size:13px; }
+  .userrow .who b{ font-size:14px; }
+  .userrow .who svg{ width:30px; height:30px; stroke:#475569; stroke-width:1.6; fill:none; }
+  .flow{ font-size:12.5px; color:#334155; line-height:1.85; }
+  .flow div::before{ content:"•"; color:#94a3b8; margin-right:7px; }
+  .swap{ color:#64748b; font-size:20px; }
+  .chk::before{ content:""; }
+
+  .side{ flex:1; display:flex; flex-direction:column; }
+  .side .bd{ gap:18px; padding:20px 18px; }
+  .kv{ display:flex; align-items:center; gap:12px; }
+  .kv svg{ width:30px; height:30px; stroke:#475569; stroke-width:1.6; fill:none; flex-shrink:0;}
+  .kv b{ font-size:14px; color:#1f2937;} .kv span{ font-size:12px; color:#64748b; }
+  .dbrow{ background:#eff4fb; border:1px solid #e2e8f0; border-radius:7px; text-align:center;
+          padding:9px; font-size:13px; color:#1f2937; font-weight:600; margin-bottom:8px; font-family:Consolas,monospace;}
+  .dbrow small{ display:block; color:#64748b; font-weight:500; font-size:10.5px; font-family:inherit;}
+  .pgtitle{ display:flex; align-items:center; justify-content:center; gap:8px; font-size:17px;
+            font-weight:800; color:#31465f; margin-bottom:8px; }
+  .pgtitle svg{ width:24px; height:24px; }
+
+  /* tech stack */
+  .tech{ display:flex; align-items:center; gap:0; margin-top:24px; border:1px solid var(--line);
+         border-radius:12px; overflow:hidden; }
+  .tech .lbl{ background:var(--navy); color:#fff; font-weight:800; font-size:15px;
+              padding:20px 24px; white-space:nowrap; }
+  .tech .items{ display:flex; flex:1; justify-content:space-around; align-items:center; padding:14px 20px;}
+  .tech .it{ display:flex; align-items:center; gap:10px; font-size:14px; color:#1f2937; font-weight:600;}
+  .tech .it svg{ width:26px; height:26px; stroke:#475569; stroke-width:1.6; fill:none;}
+  .tech .it small{ display:block; color:#64748b; font-weight:500; font-size:11px;}
+</style>
+</head>
+<body>
+  <div class="title">Mouse Behavior Analysis System Architecture</div>
+  <div class="subtitle">Open Field Test 행동 분석 플랫폼</div>
+
+  <!-- ===== TOP: 6 STAGES ===== -->
+  <div class="row">
+    <!-- 1 -->
+    <div class="card stage">
+      <div class="hd">1. Data Acquisition</div>
+      <div class="bd">
+        <div class="icn"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg></div>
+        <div class="sub"><b>Behavior Video</b><span>Top-view 녹화</span></div>
+        <div class="sub"><b>Experimental Mice</b><span>32 마리</span></div>
+        <div class="sub sgray"><b>Control / Yohimbine</b><span>0, 1, 3, 6 mg/kg</span></div>
+      </div>
+    </div>
+    <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <!-- 2 -->
+    <div class="card stage">
+      <div class="hd">2. Pose Estimation</div>
+      <div class="bd">
+        <div class="icn"><svg viewBox="0 0 24 24"><circle cx="6" cy="7" r="2.3"/><circle cx="18" cy="7" r="2.3"/><circle cx="12" cy="17" r="2.3"/><path d="M8 8l3 7M16 8l-3 7M8 7h8"/></svg></div>
+        <div class="brand">DeepLabCut</div>
+        <div class="bullets"><div>Body part detection</div><div>Pose coordinates</div></div>
+        <div class="sub sg"><b>DLC CSV Files</b><span>(x, y) 좌표 데이터</span></div>
+      </div>
+    </div>
+    <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <!-- 3 -->
+    <div class="card stage">
+      <div class="hd">3. Data Processing</div>
+      <div class="bd">
+        <div class="icn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+        <div class="sub sg"><b>Data Preprocessing</b><span>로딩 · 정제</span></div>
+        <div class="sub sg"><b>Z-score Normalization</b><span>State Vector 표준화</span></div>
+        <div class="sub sg"><b>Quality Control</b><span>결측·이상치 처리</span></div>
+      </div>
+    </div>
+    <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <!-- 4 -->
+    <div class="card stage">
+      <div class="hd">4. Feature Engineering</div>
+      <div class="bd">
+        <div class="icn"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+        <div class="sub sp"><b>Kinematics</b><span>속도 · 가속도</span></div>
+        <div class="sub sp"><b>Spatial</b><span>중심부 체류 · 벽 근접</span></div>
+        <div class="sub sp"><b>Morphology</b><span>자세 · 신체 길이</span></div>
+      </div>
+    </div>
+    <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <!-- 5 -->
+    <div class="card stage">
+      <div class="hd">5. Behavior Analysis</div>
+      <div class="bd">
+        <div class="icn"><svg viewBox="0 0 24 24"><path d="M2 12h4l3 8 4-16 3 8h6"/></svg></div>
+        <div class="sub sa"><b>Behavior Scoring</b><span>5종 강도 점수 · Sigmoid</span></div>
+        <div class="sub sa"><b>Statistical Analysis</b><span>LME Model</span></div>
+        <div class="sub sa"><b>Group Comparison</b><span>Cohen's d 효과크기</span></div>
+      </div>
+    </div>
+    <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <!-- 6 -->
+    <div class="card stage">
+      <div class="hd">6. Visualization &amp; Report</div>
+      <div class="bd">
+        <div class="icn"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4M7 12l3-3 2 2 4-4"/></svg></div>
+        <div class="sub sb"><b>Interactive Dashboard</b><span>Streamlit</span></div>
+        <div class="sub sb"><b>Data Visualization</b><span>Plotly / Matplotlib</span></div>
+        <div class="sub sb"><b>Report Export</b><span>PDF / CSV</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- dashed connectors -->
+  <div class="connect" id="connect"></div>
+
+  <!-- ===== BOTTOM ROW ===== -->
+  <div class="row2">
+    <!-- Web Dashboard -->
+    <div class="card dash">
+      <div class="hd">7. Web Dashboard (Streamlit)</div>
+      <div class="thumbs">
+        <div class="thumb"><div class="frame"><img src="screens/dashboard.png"></div><div class="cap">대시보드</div></div>
+        <div class="thumb"><div class="frame"><img src="screens/experiments.png"></div><div class="cap">실험 관리</div></div>
+        <div class="thumb"><div class="frame"><img src="screens/mice.png"></div><div class="cap">개체 관리</div></div>
+        <div class="thumb"><div class="frame"><img src="screens/comparison.png"></div><div class="cap">비교 분석</div></div>
+        <div class="thumb"><div class="frame"><img src="screens/detail.png"></div><div class="cap">단일 개체 분석</div></div>
+      </div>
+      <div class="userrow">
+        <div class="who">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <div><b>사용자</b><br><span style="color:#64748b;font-size:12px;">(연구자)</span></div>
+        </div>
+        <div class="flow">
+          <div>실험 데이터 업로드 및 관리</div>
+          <div>행동 분석 및 통계 결과 확인</div>
+          <div>결과 시각화 및 리포트 다운로드</div>
+        </div>
+        <div class="swap">↔</div>
+        <div class="flow">
+          <div>행동 지표 산출 · 검증</div>
+          <div>LME 통계 분석</div>
+          <div>개체별 타임라인 분석</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Backend -->
+    <div class="card side">
+      <div class="hd">Backend (Python)</div>
+      <div class="bd">
+        <div class="kv"><svg viewBox="0 0 24 24"><path d="M8 3h4a3 3 0 0 1 3 3v3H9a3 3 0 0 0-3 3v0M16 21h-4a3 3 0 0 1-3-3v-3h6a3 3 0 0 0 3-3v0"/></svg>
+          <div><b>Data Layer</b><br><span>Pandas · NumPy</span></div></div>
+        <div class="kv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+          <div><b>Analysis Engine</b><br><span>Features · Statsmodels(LME)</span></div></div>
+        <div class="kv"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+          <div><b>Data Access</b><br><span>psycopg2 · SQLite fallback</span></div></div>
+      </div>
+    </div>
+
+    <!-- Database -->
+    <div class="card side">
+      <div class="hd">Database</div>
+      <div class="bd">
+        <div class="pgtitle">
+          <svg viewBox="0 0 24 24" style="stroke:#31648c;stroke-width:1.6;fill:none;"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+          PostgreSQL
+        </div>
+        <div>
+          <div class="dbrow">animals<small>개체 · 투여군</small></div>
+          <div class="dbrow">scores<small>프레임별 5종 점수</small></div>
+          <div class="dbrow">model_results<small>LME 계수 · p값</small></div>
+          <div class="dbrow">validation<small>추세 · 효과크기</small></div>
+        </div>
+        <div style="text-align:center;font-size:11.5px;color:#64748b;">↕ SQLite 데모 자동 폴백</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TECH STACK ===== -->
+  <div class="tech">
+    <div class="lbl">Technology Stack</div>
+    <div class="items">
+      <div class="it"><svg viewBox="0 0 24 24"><path d="M8 3h4a3 3 0 0 1 3 3v3H9a3 3 0 0 0-3 3M16 21h-4a3 3 0 0 1-3-3v-3h6a3 3 0 0 0 3-3"/></svg>Python 3.11+</div>
+      <div class="it"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM4 19h16"/></svg>Streamlit</div>
+      <div class="it"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg>Pandas</div>
+      <div class="it"><svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 3v18M4 7.5l16 9M20 7.5l-16 9"/></svg>NumPy</div>
+      <div class="it"><svg viewBox="0 0 24 24"><path d="M2 12h4l3 8 4-16 3 8h6"/></svg><span>Statsmodels<small>LME</small></span></div>
+      <div class="it"><svg viewBox="0 0 24 24"><path d="M4 20V9M9 20V4M14 20v-6M19 20v-10M22 20H2"/></svg>Plotly</div>
+      <div class="it"><svg viewBox="0 0 24 24" style="stroke:#31648c;"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/></svg>PostgreSQL</div>
+    </div>
+  </div>
+
+  <script>
+    // draw dashed connectors from each top stage down into the dashboard band
+    (function(){
+      const c = document.getElementById('connect');
+      const band = c.getBoundingClientRect();
+      const targetX = document.querySelector('.dash').getBoundingClientRect();
+      const stages = document.querySelectorAll('.row .stage');
+      const midDashX = targetX.left + targetX.width/2 - band.left;
+      stages.forEach(s=>{
+        const r = s.getBoundingClientRect();
+        const x = r.left + r.width/2 - band.left;
+        const v = document.createElement('div'); v.className='v'; v.style.left=x+'px'; c.appendChild(v);
+      });
+      // horizontal collector line
+      const xs = [...stages].map(s=>{const r=s.getBoundingClientRect();return r.left+r.width/2-band.left;});
+      const h = document.createElement('div'); h.className='h';
+      h.style.left=Math.min(...xs)+'px'; h.style.width=(Math.max(...xs)-Math.min(...xs))+'px';
+      c.appendChild(h);
+      const down = document.createElement('div'); down.className='v';
+      down.style.left=midDashX+'px'; down.style.top='34px'; down.style.height='0px'; c.appendChild(down);
+    })();
+  </script>
+</body>
+</html>

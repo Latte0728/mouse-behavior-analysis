@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{--navy:#233247;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;}
+  body{font-family:"Segoe UI","Malgun Gothic",sans-serif;background:#fff;color:var(--ink);
+       width:1180px;padding:34px 40px;}
+  .title{font-size:24px;font-weight:800;}
+  .sub{font-size:14px;color:#475569;margin-top:5px;margin-bottom:8px;}
+  .canvas{position:relative;margin-top:16px;}
+  .tbl{position:absolute;width:330px;border:1px solid var(--line);border-radius:11px;overflow:hidden;
+       box-shadow:0 1px 3px rgba(15,23,42,.06);background:#fff;}
+  .tbl .h{background:var(--navy);color:#fff;font-weight:700;font-size:15px;padding:11px 14px;
+          font-family:Consolas,monospace;display:flex;align-items:center;gap:8px;}
+  .tbl .h small{font-family:"Segoe UI",sans-serif;font-weight:500;font-size:11px;color:#b6c4d6;margin-left:auto;}
+  .col{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:13px;border-top:1px solid #eef2f7;}
+  .col .n{font-family:Consolas,monospace;font-weight:600;color:#1f2937;min-width:132px;}
+  .col .t{font-family:Consolas,monospace;color:#7c8aa0;font-size:11.5px;margin-left:auto;}
+  .badge{font-size:9.5px;font-weight:800;padding:1.5px 5px;border-radius:4px;letter-spacing:.4px;}
+  .pk{background:#fef3c7;color:#b45309;} .fk{background:#dbeafe;color:#1d4ed8;}
+  .col.key{background:#fbfcfe;}
+  .note{font-size:11px;color:#94a3b8;padding:7px 14px;border-top:1px solid #eef2f7;font-style:italic;}
+
+  svg.wire{position:absolute;left:0;top:0;overflow:visible;pointer-events:none;}
+  .relcap{position:absolute;background:#fff;border:1px solid #cbd5e1;border-radius:6px;
+          font-size:11px;font-weight:700;color:#334155;padding:2px 8px;}
+  .grouplbl{position:absolute;font-size:11.5px;font-weight:700;color:#94a3b8;letter-spacing:1px;}
+</style>
+</head>
+<body>
+  <div class="title">Database Schema (ERD)</div>
+  <div class="sub">PostgreSQL · <code>mouse_behavior</code> 스키마 &nbsp;|&nbsp; 데모 실행 시 동일 구조로 SQLite 폴백</div>
+
+  <div class="canvas" style="height:660px;">
+
+    <div class="grouplbl" style="left:0;top:4px;">■ 원천 데이터 (개체 · 프레임별 점수)</div>
+    <div class="grouplbl" style="left:760px;top:4px;">■ 분석 산출물 (behavior 단위 집계)</div>
+
+    <!-- animals -->
+    <div class="tbl" style="left:0;top:34px;">
+      <div class="h">🔑 animals <small>개체 마스터</small></div>
+      <div class="col key" id="a-aid"><span class="badge pk">PK</span><span class="n">animal_id</span><span class="t">TEXT</span></div>
+      <div class="col"><span class="n">dose</span><span class="t">INTEGER</span></div>
+      <div class="col"><span class="n">group_name</span><span class="t">TEXT</span></div>
+      <div class="col"><span class="n">created_at</span><span class="t">TIMESTAMPTZ</span></div>
+    </div>
+
+    <!-- scores -->
+    <div class="tbl" style="left:390px;top:214px;">
+      <div class="h">scores <small>프레임별 행동 점수</small></div>
+      <div class="col key"><span class="badge pk">PK</span><span class="n">id</span><span class="t">BIGSERIAL</span></div>
+      <div class="col key" id="s-aid"><span class="badge fk">FK</span><span class="n">animal_id</span><span class="t">TEXT</span></div>
+      <div class="col"><span class="n">frame</span><span class="t">INTEGER</span></div>
+      <div class="col"><span class="n">locomotion</span><span class="t">REAL</span></div>
+      <div class="col"><span class="n">exploration</span><span class="t">REAL</span></div>
+      <div class="col"><span class="n">anxiety</span><span class="t">REAL</span></div>
+      <div class="col"><span class="n">hyperactivity</span><span class="t">REAL</span></div>
+      <div class="col"><span class="n">freezing</span><span class="t">REAL</span></div>
+    </div>
+
+    <!-- model_results -->
+    <div class="tbl" style="left:760px;top:34px;">
+      <div class="h">model_results <small>LME 모델</small></div>
+      <div class="col key"><span class="badge pk">PK</span><span class="n">id</span><span class="t">SERIAL</span></div>
+      <div class="col"><span class="n">behavior</span><span class="t">TEXT</span></div>
+      <div class="col"><span class="n">dose_coef</span><span class="t">DOUBLE</span></div>
+      <div class="col"><span class="n">dose_pval</span><span class="t">DOUBLE</span></div>
+      <div class="col"><span class="n">time_coef</span><span class="t">DOUBLE</span></div>
+      <div class="col"><span class="n">time_pval</span><span class="t">DOUBLE</span></div>
+      <div class="col"><span class="n">random_var</span><span class="t">DOUBLE</span></div>
+      <div class="col"><span class="n">status</span><span class="t">TEXT</span></div>
+    </div>
+
+    <!-- validation -->
+    <div class="tbl" style="left:760px;top:360px;">
+      <div class="h">validation <small>검증 지표</small></div>
+      <div class="col key"><span class="badge pk">PK</span><span class="n">id</span><span class="t">SERIAL</span></div>
+      <div class="col"><span class="n">test_type</span><span class="t">TEXT</span></div>
+      <div class="col"><span class="n">behavior</span><span class="t">TEXT</span></div>
+      <div class="col"><span class="n">metric_name</span><span class="t">TEXT</span></div>
+      <div class="col"><span class="n">metric_value</span><span class="t">DOUBLE</span></div>
+    </div>
+
+    <!-- relationship wire drawn by JS from actual cell positions -->
+    <svg class="wire" id="wire" width="1180" height="600"></svg>
+    <div class="relcap" id="rc">1 : N</div>
+
+    <!-- note: standalone aggregate tables -->
+    <div class="grouplbl" style="left:760px;top:600px;color:#b0bccb;font-weight:600;">
+      ※ 개체가 아닌 <b style="color:#8593a5;">behavior(행동) 단위</b> 집계라 animals와 직접 FK 없음
+    </div>
+
+  </div>
+
+  <script>
+    (function(){
+      const canvas=document.querySelector('.canvas');
+      const cb=canvas.getBoundingClientRect();
+      const a=document.getElementById('a-aid').getBoundingClientRect();
+      const s=document.getElementById('s-aid').getBoundingClientRect();
+      const x1=a.right-cb.left, y1=a.top-cb.top+a.height/2;
+      const x2=s.left-cb.left,  y2=s.top-cb.top+s.height/2;
+      const mx=x1+26;
+      const svg=document.getElementById('wire');
+      const NS='http://www.w3.org/2000/svg';
+      function stroke(d,w){const p=document.createElementNS(NS,'path');
+        p.setAttribute('d',d);p.setAttribute('stroke', w||'#94a3b8');
+        p.setAttribute('stroke-width','2');p.setAttribute('fill','none');
+        p.setAttribute('stroke-linecap','round');svg.appendChild(p);}
+      // orthogonal connector: animals.animal_id → scores.animal_id
+      stroke(`M ${x1} ${y1} H ${mx} V ${y2} H ${x2}`);
+      // '1' tick near animals
+      stroke(`M ${x1+2} ${y1-9} V ${y1+9}`, '#64748b');
+      // crow's foot (N) at scores
+      stroke(`M ${x2} ${y2} L ${x2-14} ${y2-8} M ${x2} ${y2} L ${x2-14} ${y2} M ${x2} ${y2} L ${x2-14} ${y2+8}`, '#64748b');
+      const rc=document.getElementById('rc');
+      rc.style.left=(mx-20)+'px'; rc.style.top=((y1+y2)/2-12)+'px';
+    })();
+  </script>
+</body>
+</html>

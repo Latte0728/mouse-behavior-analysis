@@ -1,0 +1,6 @@
+Behavior,Trend_Slope,Trend_Pval,R_squared
+Locomotion_Score,-0.023162,0.0,0.6915
+Exploration_Score,-0.010076,0.017373,0.1745
+Anxiety_Score,0.007637,0.098628,0.0883
+Hyperactivity_Score,-0.027302,0.0,0.8165
+Freezing_Score,0.020882,1e-06,0.5587
