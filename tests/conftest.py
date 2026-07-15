@@ -13,4 +13,4 @@ for p in (ROOT, os.path.join(ROOT, "dashboard")):
 
 # 테스트는 항상 번들 SQLite 샘플로 (로컬 PostgreSQL 유무와 무관하게 재현)
 os.environ.setdefault("BEHAVIOR_FORCE_SQLITE", "1")
- 
+  
