@@ -88,3 +88,4 @@ def calculate_scores(df: pd.DataFrame) -> pd.DataFrame:
         df[f'{behavior}_Score'] = _sigmoid(score_sum)
 
     return df
+ 
