@@ -119,3 +119,4 @@ with tabs[0]:
 for i, d in enumerate(doses):
     with tabs[i + 1]:
         render_table(df_animals[df_animals['dose'] == d], f"d{int(d)}")
+ 
