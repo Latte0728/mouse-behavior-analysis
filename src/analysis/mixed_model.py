@@ -83,3 +83,4 @@ def run_all_models(df: pd.DataFrame) -> pd.DataFrame:
         result = fit_mixed_model(df, col)
         summaries.append(extract_summary(result, col))
     return pd.DataFrame(summaries)
+ 
