@@ -24,4 +24,4 @@ opencv-python>=4.12.0
 
 # 선택: 설치 시 UMAP 임베딩 사용, 미설치 시 PCA로 자동 폴백
 # umap-learn>=0.5
- 
+  
