@@ -575,3 +575,4 @@ def build_comparison_pptx(cfg, result, disp, lines, comp_type="group"):
     prs.save(buf)
     buf.seek(0)
     return buf.getvalue()
+ 
