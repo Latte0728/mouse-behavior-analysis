@@ -136,3 +136,4 @@ with tab_done:
     render(df_exp[df_exp['_status'] == "분석 완료"], "done")
 with tab_up:
     render(df_exp[df_exp['_status'] == "업로드 완료"], "up")
+ 
