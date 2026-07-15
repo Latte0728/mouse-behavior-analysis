@@ -59,3 +59,4 @@ def test_overview_counts():
     ov = ds.get_overview()
     assert ov["total_animals"] == 32
     assert ov["total_groups"] == 4
+ 
