@@ -18,3 +18,4 @@ DB_CONFIG = {
 
 # 데이터 적재 배치 크기 기본값
 DEFAULT_BATCH_SIZE = 50_000
+ 
