@@ -79,3 +79,4 @@ def calculate_spatial_features(
         results.append(grp)
 
     return pd.concat(results, ignore_index=True)
+ 
