@@ -114,3 +114,4 @@ def build_dataset(metadata_path: str, data_dir: str) -> pd.DataFrame:
         raise RuntimeError("분석 가능한 데이터가 없습니다. 경로와 파일명 규칙을 확인하세요.")
 
     return pd.concat(records, ignore_index=True)
+ 
