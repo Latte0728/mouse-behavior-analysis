@@ -537,3 +537,4 @@ elif ss.comp_step == 4:
                                    mime=mime_type, type="primary")
                 st.download_button("결과 데이터(CSV) 다운로드", rows.to_csv(index=False).encode("utf-8-sig"),
                                    file_name=f"timewindows_{r['animal']}.csv", mime="text/csv")
+ 
