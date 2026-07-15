@@ -223,3 +223,6 @@ data/Yohimbine_Roche/
 
 # Raw videos
 Videos/
+
+# Claude
+.claude/
