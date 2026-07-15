@@ -230,3 +230,4 @@ DB 접속 정보는 환경변수로 재정의: `PGHOST, PGDATABASE, PGUSER, PGPA
 - **animals** (개체 마스터) ─1:N─ **scores** (프레임별 5종 행동 점수) — `animal_id` FK 연결
 - **model_results** — 행동별 LME 계수·p값, **validation** — 추세 검정·효과크기 (통계 산출물)
 - PostgreSQL `mouse_behavior` 스키마 기준이며, 데모 실행 시 동일 구조로 SQLite에 폴백됩니다.
+ 
