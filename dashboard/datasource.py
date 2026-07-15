@@ -413,3 +413,4 @@ def run_comparison(base_dose: int, comp_doses: list, metrics: list,
         'metrics': metrics,
     }
     return {'rows': rows_df, 'group_means': gmeans, 'meta': meta}
+ 
