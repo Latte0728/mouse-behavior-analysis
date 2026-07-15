@@ -651,3 +651,4 @@ with col9:
                 
         if st.button("전체 모델 데이터 팝업창으로 바로 보기", use_container_width=True):
             show_csv_dialog()
+ 
