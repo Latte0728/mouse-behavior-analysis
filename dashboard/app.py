@@ -140,3 +140,4 @@ pg = st.navigation([
 
 # 페이지 렌더링
 pg.run()
+ 
