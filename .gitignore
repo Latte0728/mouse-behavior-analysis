@@ -226,3 +226,6 @@ Videos/
 
 # Claude
 .claude/
+
+# Agents
+.agents/
