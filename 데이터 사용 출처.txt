@@ -1,2 +1,2 @@
 사용 데이터셋 : 
-Raw video and pose estimation data of top view open field mouse behavior recordings after yohimbine injections 
+Raw video and pose estimation data of top view open field mouse behavior recordings after yohimbine injections  
