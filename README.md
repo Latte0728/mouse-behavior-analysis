@@ -66,24 +66,34 @@ DeepLabCut 포즈 추정 좌표 데이터를 기반으로 마우스 Open Field(Y
 
 ## 5. 프로젝트 구조
 
-```
+```text
 my_project/
-├── main.py                  # 전체 파이프라인 실행 진입점
-├── dashboard/               # Streamlit 앱
-│   ├── app.py
-│   ├── pages/               # 01_dashboard ~ 05_mouse_detail
-│   └── sample_data/         # 번들 SQLite 샘플 (데모 폴백)
-├── src/                     # 분석 파이프라인
-│   ├── data/                # DLC CSV 로더·전처리
-│   ├── features/            # kinematics · spatial · morphology
-│   ├── state/               # Z-score 정규화 (State Vector)
-│   ├── scoring/             # 연속 행동 강도 점수화
-│   ├── analysis/            # LME 혼합모델 · 비교 시각화
-│   └── validation/          # 추세 검정 · 효과크기 검증
-├── db/schema.py             # DB 스키마 + Postgres↔SQLite 폴백
-├── scripts/build_sample.py  # DB 스냅샷 → SQLite 샘플 생성
-├── outputs/                 # 분석 결과물 (PNG · CSV)
-└── requirements.txt
+├── main.py                  # 전체 분석 파이프라인 실행 진입점
+├── generate_plots.py        # 분석 결과를 바탕으로 시각화 차트를 생성하는 스크립트
+├── pyproject.toml           # Python 프로젝트 설정 파일
+├── requirements.txt         # 패키지(Python 패키지) 의존성 목록
+├── METADATA_ROCHE.csv       # 실험 개체 및 투여군 정보가 담긴 메타데이터
+├── 데이터 사용 출처.txt     # 데이터셋 원본 출처 및 라이선스 정보
+├── config/                  # 설정 디렉터리 (CSV 포맷, 데이터베이스, LME 모델, 플롯 관련 설정)
+├── dashboard/               # Streamlit 기반 웹 대시보드 애플리케이션
+│   ├── app.py               # 대시보드 구동을 위한 메인 실행 파일 (엔트리 포인트)
+│   ├── pages/               # 개별 화면 모듈 (01_dashboard ~ 05_mouse_detail)
+│   └── sample_data/         # 데모 실행을 위해 내장된 SQLite 샘플 데이터베이스
+├── src/                     # 핵심 행동 분석 파이프라인 소스 코드
+│   ├── data/                # DeepLabCut CSV 데이터 로더 및 결측치 전처리
+│   ├── features/            # 행동 특성 지표 추출 (운동학, 공간 점유, 형태학적 자세)
+│   ├── state/               # 특성 데이터의 단위 통일을 위한 Z-score 정규화 및 State Vector 구성
+│   ├── scoring/             # 행동 특성 기반 5종 연속 강도 점수 산출 (0~1 범위화)
+│   ├── analysis/            # 통계 분석(LME 선형 혼합 효과 모델) 및 비교 분석 로직
+│   └── validation/          # 투여량에 따른 추세 검정 및 효과크기(Cohen's d) 통계 검증
+├── db/                      # 데이터베이스 연동 및 관리
+│   └── schema.py            # 스키마 정의 및 라이브 DB(PostgreSQL) ↔ 데모 DB(SQLite) 자동 전환(폴백) 처리
+├── scripts/                 # 부가 유틸리티 및 실행 스크립트
+│   ├── build_sample.py      # 분석 완료된 데이터베이스에서 샘플 SQLite DB를 추출하는 스크립트
+│   └── run_demo.py          # 데모 모드로 대시보드를 바로 실행하는 유틸리티
+├── outputs/                 # 분석 파이프라인 최종 산출물 저장소 (점수화 차트 PNG, 통계 요약 CSV 등)
+├── static/                  # 웹 UI 및 문서에 사용되는 정적 리소스 (아키텍처 다이어그램, ERD, 스크린샷 파일)
+└── tests/                   # 코드 무결성 검증을 위한 유닛 테스트 모음 (분석 알고리즘, 상수 검증 등)
 ```
 
 ---
