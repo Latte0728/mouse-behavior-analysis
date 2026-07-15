@@ -351,3 +351,4 @@ def init_experiments_table():
         else:
             with conn.cursor() as cur:
                 cur.execute(ddl)
+ 
