@@ -122,3 +122,4 @@ def run_validation(df: pd.DataFrame, mixed_model_summary: pd.DataFrame) -> dict:
         'trend':       trend,
         'effect_size': effect,
     }
+ 
