@@ -26,3 +26,4 @@ def test_inverse_beh_subset():
 
 def test_fps_positive():
     assert C.FPS > 0
+ 
