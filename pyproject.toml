@@ -36,4 +36,4 @@ packages = ["db", "src", "src.data", "src.features", "src.state",
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
- 
+  
