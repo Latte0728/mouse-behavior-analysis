@@ -6,3 +6,4 @@ CSV_MAPPING = {
     "dose": "Dosage",
     "group": "Group"
 }
+ 
