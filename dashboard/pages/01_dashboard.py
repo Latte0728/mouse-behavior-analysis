@@ -210,3 +210,4 @@ with row2_col2:
                 showlegend=False
             )
             st.plotly_chart(fig2, use_container_width=True)
+ 
