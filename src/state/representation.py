@@ -37,3 +37,4 @@ def compute_state_vector(df: pd.DataFrame) -> tuple[pd.DataFrame, StandardScaler
         df[f'z_{col}'] = scaled[:, i]
 
     return df, scaler
+ 
